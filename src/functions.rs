@@ -9,3 +9,9 @@ pub fn cos(variable: Variable) -> Variable
 {
     Variable { value: variable.value.cos(), derivative: -variable.derivative * variable.value.sin() }
 }
+
+pub fn tan(variable: Variable) -> Variable
+{
+    let sec = 1.0 / variable.value.cos();
+    Variable { value: variable.value.tan(), derivative: variable.derivative * sec * sec }
+}
