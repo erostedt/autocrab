@@ -60,4 +60,13 @@ mod tests
         assert!(almost_eq(fx.derivative, 2.0));
     }
 
+    #[test]
+    fn test_ln_2()
+    {
+        let x = Variable::new(2.0);
+        let fx = ln(x);
+        assert!(almost_eq(fx.value, std::f64::consts::LN_2));
+        assert!(almost_eq(fx.derivative, 1.0/2.0));
+    }
+
 }
