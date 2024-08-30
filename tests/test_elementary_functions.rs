@@ -69,4 +69,44 @@ mod tests
         assert!(almost_eq(fx.derivative, 1.0/2.0));
     }
 
+    #[test]
+    fn test_square()
+    {
+        let x = Variable::new(3.0);
+        let fx = square(x);
+        assert!(almost_eq(fx.value, 9.0));
+        assert!(almost_eq(fx.derivative, 6.0));
+    }
+
+    #[test]
+    fn test_pow()
+    {
+        let x = Variable::new(2.0);
+        let fx = pow(x, 3.0);
+        assert!(almost_eq(fx.value, 8.0));
+        assert!(almost_eq(fx.derivative, 12.0));
+    }
+
+    #[test]
+    fn test_sqrt()
+    {
+        let x = Variable::new(2.0);
+        let fx = sqrt(x);
+        let target_value = f64::sqrt(2.0);
+        let target_derivative = 0.5/f64::sqrt(2.0);
+        assert!(almost_eq(fx.value, target_value));
+        assert!(almost_eq(fx.derivative, target_derivative));
+    }
+
+    #[test]
+    fn test_hard_expression()
+    {
+        let x = Variable::new(2.0);
+        let fx = tan(ln(x) + sin(x)) + x * cos(x);
+        let target_value = -32.4190367069393;
+        let target_derivative = 81.5112855513418;
+        assert!(almost_eq(fx.value, target_value));
+        assert!(almost_eq(fx.derivative, target_derivative));
+    }
+
 }
