@@ -9,12 +9,17 @@ pub struct Variable
 
 impl Variable
 {
-    pub fn new(value: f64) -> Self
+    pub fn empty() -> Self
+    {
+        Self { value: 0.0, derivative: 0.0 }
+    }
+
+    pub fn seeded(value: f64) -> Self
     {
         Self { value, derivative: 1.0 }
     }
 
-    pub fn with_initial_derivative(value: f64, derivative: f64) -> Self
+    pub fn with_derivative(value: f64, derivative: f64) -> Self
     {
         Self { value, derivative }
     }
