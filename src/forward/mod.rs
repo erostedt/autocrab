@@ -2,19 +2,19 @@ pub mod evaluate;
 pub mod functions;
 pub mod variable;
 
-
 pub fn almost_eq(left: f64, right: f64) -> bool
 {
     let tolerance = 1.0e-8;
     (left - right).abs() < tolerance
 }
 
-pub fn almost_equals<const VARIABLE_COUNT: usize>(lhs: [f64; VARIABLE_COUNT], rhs: [f64; VARIABLE_COUNT]) -> bool
+pub fn almost_equals<const VARIABLE_COUNT: usize>(
+    lhs: [f64; VARIABLE_COUNT],
+    rhs: [f64; VARIABLE_COUNT],
+) -> bool
 {
-    for (left, right) in lhs.into_iter().zip(rhs.into_iter())
-    {
-        if !almost_eq(left, right)
-        {
+    for (left, right) in lhs.into_iter().zip(rhs.into_iter()) {
+        if !almost_eq(left, right) {
             return false;
         }
     }
@@ -24,8 +24,8 @@ pub fn almost_equals<const VARIABLE_COUNT: usize>(lhs: [f64; VARIABLE_COUNT], rh
 #[cfg(test)]
 mod test_variable
 {
-    use super::*;
     use super::variable::*;
+    use super::*;
 
     #[test]
     fn test_add_variables()
@@ -139,16 +139,14 @@ mod test_variable
         assert!(almost_eq(y.value, 0.5));
         assert!(almost_eq(y.derivative, -0.125));
     }
-
 }
 
-
 #[cfg(test)]
-mod test_elementary_functions 
+mod test_elementary_functions
 {
-    use super::*;
-    use super::variable::*;
     use super::functions::*;
+    use super::variable::*;
+    use super::*;
 
     #[test]
     fn test_sinus_90_deg()
@@ -206,7 +204,7 @@ mod test_elementary_functions
         let x = Variable::seeded(2.0);
         let fx = ln(x);
         assert!(almost_eq(fx.value, std::f64::consts::LN_2));
-        assert!(almost_eq(fx.derivative, 1.0/2.0));
+        assert!(almost_eq(fx.derivative, 1.0 / 2.0));
     }
 
     #[test]
@@ -233,7 +231,7 @@ mod test_elementary_functions
         let x = Variable::seeded(2.0);
         let fx = sqrt(x);
         let target_value = f64::sqrt(2.0);
-        let target_derivative = 0.5/f64::sqrt(2.0);
+        let target_derivative = 0.5 / f64::sqrt(2.0);
         assert!(almost_eq(fx.value, target_value));
         assert!(almost_eq(fx.derivative, target_derivative));
     }
@@ -248,15 +246,13 @@ mod test_elementary_functions
         assert!(almost_eq(fx.value, target_value));
         assert!(almost_eq(fx.derivative, target_derivative));
     }
-
 }
 
-
 #[cfg(test)]
-mod test_polynomials 
+mod test_polynomials
 {
-    use super::*;
     use super::variable::*;
+    use super::*;
 
     #[test]
     fn test_linear_positive()
@@ -286,14 +282,13 @@ mod test_polynomials
     }
 }
 
-
 #[cfg(test)]
-mod test_evaluate 
+mod test_evaluate
 {
-    use super::*;
     use super::evaluate::*;
     use super::functions::*;
     use super::variable::*;
+    use super::*;
 
     #[test]
     fn test_evaluate_multi_linear()
@@ -319,8 +314,7 @@ mod test_evaluate
         }
 
         let mut x = [0.0];
-        for _ in 0..30
-        {
+        for _ in 0..30 {
             x = gradient_descent_step(objective_function, x, 0.5);
         }
         println!("{:?}", x[0]);

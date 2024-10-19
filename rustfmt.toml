@@ -1,0 +1,8 @@
+max_width = 100
+
+hard_tabs = false
+tab_spaces = 4
+
+normalize_comments = true
+
+brace_style = "AlwaysNextLine"
