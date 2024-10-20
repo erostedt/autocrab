@@ -33,6 +33,15 @@ pub fn ln(variable: Variable) -> Variable
     }
 }
 
+pub fn exp(variable: Variable) -> Variable
+{
+    let exp_value = variable.value.exp();
+    Variable {
+        value: exp_value,
+        derivative: exp_value * variable.derivative,
+    }
+}
+
 pub fn square(variable: Variable) -> Variable
 {
     variable * variable

@@ -293,32 +293,61 @@ mod test_evaluate
     #[test]
     fn test_evaluate_multi_linear()
     {
-        fn objective_function(variables: [Variable; 3]) -> Variable
+        fn objective_function(variables: [Variable; 3]) -> [Variable; 1]
         {
-            variables[0] + 2.0 * variables[1] + 3.0 * variables[2]
+            [variables[0] + 2.0 * variables[1] + 3.0 * variables[2]]
         }
 
-        let (fx, gradient) = evaluate(objective_function, [1.0, 2.0, 3.0]);
-        println!("{:?}", fx);
+        let (values, jacobian) = evaluate(objective_function, [1.0, 2.0, 3.0]);
+        println!("{:?}", values[0]);
 
-        assert!(almost_eq(fx, 14.0));
-        assert!(almost_equals(gradient, [1.0, 2.0, 3.0]));
+        assert!(almost_eq(values[0], 14.0));
+        assert!(almost_equals(jacobian[0], [1.0, 2.0, 3.0]));
     }
 
     #[test]
-    fn test_gradient_descent()
+    fn test_evaluate()
     {
-        fn objective_function(variables: [Variable; 1]) -> Variable
+        fn objective_function(variables: [Variable; 2]) -> [Variable; 2]
         {
-            square(variables[0]) + 2.0 * variables[0] + 1.0
+            [
+                square(variables[0]) + variables[1],
+                2.0 * variables[0] + 3.0 * variables[1],
+            ]
         }
 
-        let mut x = [0.0];
-        for _ in 0..30 {
-            x = gradient_descent_step(objective_function, x, 0.5);
-        }
-        println!("{:?}", x[0]);
+        let (values, jacobian) = evaluate(objective_function, [1.0, 2.0]);
+        assert!(almost_eq(values[0], 3.0));
+        assert!(almost_eq(values[1], 8.0));
 
-        assert!(almost_eq(x[0], -1.0));
+        assert!(almost_eq(jacobian[0][0], 2.0));
+        assert!(almost_eq(jacobian[0][1], 1.0));
+        assert!(almost_eq(jacobian[1][0], 2.0));
+        assert!(almost_eq(jacobian[1][1], 3.0));
+    }
+
+    #[test]
+    fn test_evaluate_hard()
+    {
+        fn objective_function(variables: [Variable; 2]) -> [Variable; 3]
+        {
+            [
+                sin(variables[0]) + square(variables[1]),
+                variables[0] * exp(variables[1]),
+                cos(variables[0] * variables[1]),
+            ]
+        }
+
+        let (values, jacobian) = evaluate(objective_function, [1.0, 2.0]);
+        assert!(almost_eq(values[0], f64::sin(1.0) + 4.0));
+        assert!(almost_eq(values[1], f64::exp(2.0)));
+        assert!(almost_eq(values[2], f64::cos(2.0)));
+
+        assert!(almost_eq(jacobian[0][0], f64::cos(1.0)));
+        assert!(almost_eq(jacobian[0][1], 4.0));
+        assert!(almost_eq(jacobian[1][0], f64::exp(2.0)));
+        assert!(almost_eq(jacobian[1][1], f64::exp(2.0)));
+        assert!(almost_eq(jacobian[2][0], -2.0 * f64::sin(2.0)));
+        assert!(almost_eq(jacobian[2][1], -f64::sin(2.0)));
     }
 }
