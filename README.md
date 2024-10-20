@@ -1,5 +1,5 @@
 # About
-autocrab is a rust pun on autograd (automatic differentiation). autocrab only supports forward mode autodifferentation for functions that go from $R^n \rightarrow R$
+autocrab is a rust pun on autograd (automatic differentiation). autocrab only supports forward mode autodifferentation
 
 # Install
 * Build using `cargo build`
