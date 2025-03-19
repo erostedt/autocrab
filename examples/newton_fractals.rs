@@ -67,12 +67,9 @@ fn find_root(max_iter: usize, start: [f64; 2], roots: &[[f64; 2]; 3], tol: f64) 
         let (current_values, current_jacobian) = evaluate(objective_function, x);
         let neg = negate(current_values);
 
-        let res = solve(current_jacobian, neg);
-        if res.is_none() {
-            return None;
-        }
+        let res = solve(current_jacobian, neg)?;
 
-        iadd(&mut x, res.unwrap());
+        iadd(&mut x, res);
 
         for (k, root) in roots.iter().enumerate() {
             if norm_squared(sub(&x, root)) < tol {
