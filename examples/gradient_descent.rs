@@ -1,7 +1,7 @@
-use autocrab::forward::evaluate::evaluate;
-use autocrab::forward::evaluate::ObjectiveFunction;
-use autocrab::forward::functions::*;
-use autocrab::forward::variable::Variable;
+use autocrab::evaluate::evaluate;
+use autocrab::evaluate::ObjectiveFunction;
+use autocrab::functions::*;
+use autocrab::variable::Variable;
 
 fn objective_function(variables: [Variable; 1]) -> [Variable; 1]
 {

@@ -1,6 +1,6 @@
-use autocrab::forward::evaluate::evaluate;
-use autocrab::forward::functions::*;
-use autocrab::forward::variable::Variable;
+use autocrab::evaluate::evaluate;
+use autocrab::functions::*;
+use autocrab::variable::Variable;
 
 use std::io::{self, Write};
 

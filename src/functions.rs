@@ -1,4 +1,4 @@
-use crate::forward::variable::Variable;
+use crate::variable::Variable;
 
 pub fn sin(variable: Variable) -> Variable
 {
